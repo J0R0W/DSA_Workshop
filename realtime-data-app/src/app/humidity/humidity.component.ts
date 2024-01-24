@@ -14,7 +14,7 @@ export class HumidityComponent implements OnInit {
   constructor(private webSocketService: WebSocketService) { }
 
   ngOnInit(): void {
-    const temperatureSocket = this.webSocketService.connect('ws://localhost:6789');
+    const temperatureSocket = this.webSocketService.connect('ws://localhost:8000/data');
     temperatureSocket.subscribe(
       (message) => this.humidity = message.humidity,
       (err) => console.error(err),
