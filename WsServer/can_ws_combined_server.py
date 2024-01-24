@@ -1,4 +1,4 @@
-import _thread
+import threading
 import time
 
 from websocket_server import WebsocketServer
@@ -10,21 +10,20 @@ can_interface = 'socketcan'
 can_bitrate = 500000
 can_channel = 'can1'
 buffer = []
+clients = []
 
 # Create CAN bus connection
 bus = can.Bus(interface=can_interface, channel='can1', bitrate=can_bitrate)
-
-# Websocket parameters
-websocket_address = 'ws://localhost:8000/data'
-
 
 # Called for every client connecting (after handshake)
 def new_client(client, server):
     print("New client connected and was given id %d" % client['id'])
     server.send_message_to_all("Hey all, a new client has joined us")
+    clients.append(client)
 
     time.sleep(1)
 
+def send_msg():
     while True:
         if buffer.count() > 0:
             h, t = buffer.pop(0)
@@ -34,6 +33,7 @@ def new_client(client, server):
 # Called for every client disconnecting
 def client_left(client, server):
     print("Client(%d) disconnected" % client['id'])
+    clients.remove(client)
 
 
 # Called when a client sends a message
@@ -44,50 +44,49 @@ def message_received(client, server, message):
 
 
 def parse_can_data():
-    def run():
 
-        while True:
+    while True:
 
-            # Extract humidity data
-            try:
-                # Read next CAN message
-                can_message = bus.recv()
+        # Extract humidity data
+        try:
+            # Read next CAN message
+            can_message = bus.recv()
 
-                # Parse CAN data into physical values
-                can_data = can_message.data
-            except Exception as e:
-                pass
+            # Parse CAN data into physical values
+            can_data = can_message.data
+        except Exception as e:
+            pass
 
-            humidity_integral = can_data[2]
-            humidity_fractional = can_data[3] / 100
+        humidity_integral = can_data[2]
+        humidity_fractional = can_data[3] / 100
 
-            # Extract temperature data
-            temperature_integral = can_data[0]
-            temperature_fractional = can_data[1] / 100
+        # Extract temperature data
+        temperature_integral = can_data[0]
+        temperature_fractional = can_data[1] / 100
 
-            # Calculate checksum
-            calculated_checksum = (
-                                              humidity_integral + humidity_fractional + temperature_integral + temperature_fractional) & 0xFF
+        # Calculate checksum
+        calculated_checksum = (humidity_integral + humidity_fractional + temperature_integral + temperature_fractional) & 0xFF
 
-            # Verify checksum
-            if calculated_checksum != can_data[4]:
-                raise ValueError("Invalid CAN data: Incorrect checksum")
+        # Verify checksum
+        if calculated_checksum != can_data[4]:
+            raise ValueError("Invalid CAN data: Incorrect checksum")
 
-            # Convert humidity and temperature data to physical values
-            humidity = humidity_integral + humidity_fractional
-            temperature = temperature_integral + temperature_fractional
+        # Convert humidity and temperature data to physical values
+        humidity = humidity_integral + humidity_fractional
+        temperature = temperature_integral + temperature_fractional
 
-            dt = [humidity, temperature]
-            buffer.append(dt)
-
-    _thread.start_new_thread(run(), ())
+        dt = [humidity, temperature]
+        buffer.append(dt)
 
 
 if __name__ == '__main__':
-    parse_can_data()
     PORT = 9001
     server = WebsocketServer(port=PORT)
     server.set_fn_new_client(new_client)
     server.set_fn_client_left(client_left)
     server.set_fn_message_received(message_received)
     server.run_forever()
+    parse_can_data()
+
+    threading.Thread(send_msg()).start()
+    threading.Thread(parse_can_data()).start()

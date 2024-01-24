@@ -34,7 +34,7 @@ def on_open(ws):
 
 
 if __name__ == "__main__":
-    ws = websocket.WebSocketApp("ws://localhost:9001",
+    ws = websocket.WebSocketApp("ws://192.168.150.1:6060",
                                 on_message=on_message,
                                 on_open=on_open)
 
