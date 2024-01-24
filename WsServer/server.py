@@ -1,40 +1,38 @@
-import websocket
-from threading import Thread
-import time
-import sys
+from websocket_server import WebsocketServer
 
 
-class MyApp(websocket.WebSocketApp):
-    def on_message(self, message):
-        print(message)
+# Called for every client connecting (after handshake)
+def new_client(client, server):
+    print("New client connected and was given id %d" % client['id'])
+    server.send_message_to_all("Hey all, a new client has joined us")
+    # while(True):
+    #     server.send_message(client, "====hi")
+    # server.send_message(client, "====hi")
 
-    def on_error(self, error):
-        print(error)
-
-    def on_close(self):
-        print("### closed ###")
-
-    def on_open(self):
-        def run(*args):
-            for i in range(3):
-                # send the message, then wait
-                # so thread doesn't exit and socket
-                # isn't closed
-                self.send("Hello %d" % i)
-                time.sleep(1)
-
-            time.sleep(1)
-            self.close()
-            print("Thread terminating...")
-
-        Thread(target=run).start()
+    # logic for business message
+    msg_handle()
 
 
-if __name__ == "__main__":
-    websocket.enableTrace(True)
-    if len(sys.argv) < 2:
-        host = "ws://localhost:9001"
-    else:
-        host = sys.argv[1]
-    ws = MyApp(host)
-    ws.run_forever()
+# Called for every client disconnecting
+def client_left(client, server):
+    print("Client(%d) disconnected" % client['id'])
+
+
+# Called when a client sends a message
+def message_received(client, server, message):
+    if len(message) > 200:
+        message = message[:200] + '..'
+    print("Client(%d) said: %s" % (client['id'], message))
+
+
+def msg_handle():
+    pass
+
+
+if __name__ == '__main__':
+    PORT = 9001
+    server = WebsocketServer(port=PORT)
+    server.set_fn_new_client(new_client)
+    server.set_fn_client_left(client_left)
+    server.set_fn_message_received(message_received)
+    server.run_forever()
