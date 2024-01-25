@@ -1,0 +1,48 @@
+/* gas-pedal.component.css */
+
+.heading {
+    /* ... (reuse the heading styling from the previous component) ... */
+}
+
+.progress-container {
+    width: 100%;
+    height: 20px;
+    background-color: #f1f1f1;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, #56ab2f, #a8e063);
+    /* Green gradient */
+    transition: width 0.5s ease-in-out;
+}
+
+.value-display {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.heading {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: -webkit-linear-gradient(left, #6dd5ed, #2193b0);
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    /* To contain the gradient to the text */
+    text-align: center;
+
+}

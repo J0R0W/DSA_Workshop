@@ -1,0 +1,80 @@
+/* collapsible-panel.component.css */
+
+.panel {
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: white;
+}
+
+.panel-heading {
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e8e8e8;
+    transition: background-color 0.3s;
+}
+
+.panel-heading:hover {
+    background-color: #f1f1f1;
+}
+
+.panel-heading h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.panel-content {
+    padding: 20px;
+    border-top: 1px solid #e8e8e8;
+    display: none;
+    /* Hide initially */
+}
+
+.panel-content.open {
+    display: block;
+    /* Show when .open class is added */
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+
+h3 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: -webkit-linear-gradient(left, #6dd5ed, #2193b0);
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    /* To contain the gradient to the text */
+    text-align: center;
+
+}

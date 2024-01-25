@@ -9,12 +9,15 @@ async def send_test_data(websocket, path):
         # Generate random temperature and humidity data
         temperature = round(random.uniform(20, 30), 2)  # Random temperature between 20 and 30
         humidity = round(random.uniform(40, 60), 2)      # Random humidity between 40 and 60
-
+        steering = round(random.uniform(-200, 200), 2)  
+        gas = round(random.uniform(0, 100), 2)  
         # Prepare the data as a JSON string
         data = json.dumps({
             "temperature": temperature,
             "humidity": humidity,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
+            "gas":gas,
+            "steering":steering
         })
 
         # Send the data to the connected client
@@ -24,7 +27,7 @@ async def send_test_data(websocket, path):
         await asyncio.sleep(1)
 
 # Start the WebSocket server
-start_server = websockets.serve(send_test_data, "localhost", 6789)
+start_server = websockets.serve(send_test_data, "0.0.0.0", 6060)
 
 # Run the server
 asyncio.get_event_loop().run_until_complete(start_server)

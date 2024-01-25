@@ -1,0 +1,22 @@
+/* header.component.css */
+header {
+    background: linear-gradient(135deg, #007BFF, #00BFFF);
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease-in-out;
+}
+
+header:hover {
+    background: linear-gradient(135deg, #00BFFF, #007BFF);
+}
+
+h1 {
+    font-size: 48px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'calibri';
+}

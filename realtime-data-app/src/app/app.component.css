@@ -1,0 +1,13 @@
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+app-temperature,
+app-humidity {
+    flex: 1;
+    /* Each child will take up an equal amount of space */
+    margin: 10px;
+    /* Optional: Adds some space between the charts */
+}

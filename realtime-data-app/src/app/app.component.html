@@ -1,4 +1,13 @@
-<div style="text-align:center" class="content">
+<app-header></app-header>
+
+<div style="text-align:center" class="content chart-container">
   <app-temperature></app-temperature>
   <app-humidity></app-humidity>
 </div>
+<!--<app-tachometer></app-tachometer>-->
+<app-collapsible-panel title="Steering Moment">
+  <app-value-bar></app-value-bar>
+</app-collapsible-panel>
+<app-collapsible-panel title="Gas Pedal">
+  <app-gas-pedal></app-gas-pedal>
+</app-collapsible-panel>

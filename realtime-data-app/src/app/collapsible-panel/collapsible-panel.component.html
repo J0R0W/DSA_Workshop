@@ -1,0 +1,9 @@
+<div class="panel">
+    <div class="panel-heading" (click)="togglePanel()">
+        <h3>{{ title }}</h3>
+        <span class="toggle-icon">{{ toggleIcon }}</span>
+    </div>
+    <div class="panel-content" [class.open]="isOpen">
+        <ng-content></ng-content>
+    </div>
+</div>
