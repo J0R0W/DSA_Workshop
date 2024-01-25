@@ -10,30 +10,29 @@ can_interface = 'socketcan'
 can_bitrate = 500000
 can_channel = 'can1'
 buffer = []
-clients = []
 
 # Create CAN bus connection
 bus = can.Bus(interface=can_interface, channel='can1', bitrate=can_bitrate)
+
 
 # Called for every client connecting (after handshake)
 def new_client(client, server):
     print("New client connected and was given id %d" % client['id'])
     server.send_message_to_all("Hey all, a new client has joined us")
-    clients.append(client)
 
     time.sleep(1)
+
 
 def send_msg():
     while True:
         if buffer.count() > 0:
             h, t = buffer.pop(0)
-            server.send_message_to_all(h + "#" + t)
+            server.send_message_to_all(str(h) + "#" + str(t))
 
 
 # Called for every client disconnecting
 def client_left(client, server):
     print("Client(%d) disconnected" % client['id'])
-    clients.remove(client)
 
 
 # Called when a client sends a message
@@ -44,7 +43,6 @@ def message_received(client, server, message):
 
 
 def parse_can_data():
-
     while True:
 
         # Extract humidity data
@@ -55,7 +53,7 @@ def parse_can_data():
             # Parse CAN data into physical values
             can_data = can_message.data
         except Exception as e:
-            pass
+            print(e)
 
         humidity_integral = can_data[2]
         humidity_fractional = can_data[3] / 100
@@ -80,13 +78,14 @@ def parse_can_data():
 
 
 if __name__ == '__main__':
-    PORT = 9001
-    server = WebsocketServer(port=PORT)
+    PORT = 6060
+    HOST = '192.168.150.1'
+    server = WebsocketServer(port=PORT, host=HOST)
     server.set_fn_new_client(new_client)
     server.set_fn_client_left(client_left)
     server.set_fn_message_received(message_received)
-    server.run_forever()
-    parse_can_data()
 
-    threading.Thread(send_msg()).start()
     threading.Thread(parse_can_data()).start()
+    threading.Thread(send_msg()).start()
+
+    server.run_forever()

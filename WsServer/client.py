@@ -1,7 +1,3 @@
-#!/usr/bin/env python3.9
-# -*- coding: utf-8 -*-
-__author__ = 'ET'
-
 import json
 import time
 
