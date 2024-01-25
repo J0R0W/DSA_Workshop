@@ -9,7 +9,7 @@ async def send_test_data(websocket, path):
         # Generate random temperature and humidity data
         temperature = round(random.uniform(20, 30), 2)  # Random temperature between 20 and 30
         humidity = round(random.uniform(40, 60), 2)      # Random humidity between 40 and 60
-        steering = round(random.uniform(-200, 200), 2)  
+        steering = round(random.uniform(-2, 2), 2)  
         gas = round(random.uniform(0, 100), 2)  
         SteeringWheelAngle = round(random.uniform(-200, 200), 2)
         AbsolutThrottlePosition = round(random.uniform(0, 100), 2)

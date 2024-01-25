@@ -25,9 +25,10 @@ export class ValueBarComponent implements OnInit, OnDestroy {
   constructor(private webSocketService: WebSocketService) { }
 
   ngOnInit(): void {
-    const ws = this.webSocketService.connect('ws://localhost:6060'); // Put your actual WebSocket URL here
+    const ws = this.webSocketService.connect('ws://192.168.150.1:6060'); // Put your actual WebSocket URL here
     this.wsSubscription = ws.subscribe(
       (msg) => {
+        console.log(msg)
         const value = msg[this.webSocketProperty]; // Use the dynamic property
         if (value !== undefined) {
           this.currentValue = value;

@@ -1,13 +1,9 @@
 <app-header></app-header>
 
-<div style="text-align:center" class="content chart-container">
-  <app-temperature></app-temperature>
-  <app-humidity></app-humidity>
-</div>
 
 <app-collapsible-panel title="Steering Moment">
 
-  <app-value-bar valueType="Steering Moment" webSocketProperty="SteeringMoment" [minRange]="-200" [maxRange]="200"
+  <app-value-bar valueType="Steering Moment" webSocketProperty="SteeringMoment" [minRange]="-2" [maxRange]="2"
     [isPositiveOnly]="false"></app-value-bar>
 </app-collapsible-panel>
 
