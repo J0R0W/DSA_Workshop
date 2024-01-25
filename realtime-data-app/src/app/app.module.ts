@@ -12,6 +12,7 @@ import { ValueBarComponent } from './value-bar/value-bar.component';
 import { GasPedalComponent } from './gas-pedal/gas-pedal.component';
 import { CollapsiblePanelComponent } from './collapsible-panel/collapsible-panel.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

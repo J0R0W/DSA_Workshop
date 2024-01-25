@@ -4,10 +4,28 @@
   <app-temperature></app-temperature>
   <app-humidity></app-humidity>
 </div>
-<!--<app-tachometer></app-tachometer>-->
+
 <app-collapsible-panel title="Steering Moment">
-  <app-value-bar></app-value-bar>
+
+  <app-value-bar valueType="Steering Moment" webSocketProperty="SteeringMoment" [minRange]="-200" [maxRange]="200"
+    [isPositiveOnly]="false"></app-value-bar>
 </app-collapsible-panel>
-<app-collapsible-panel title="Gas Pedal">
-  <app-gas-pedal></app-gas-pedal>
+
+<app-collapsible-panel title="Absolute Throttle Position">
+  <app-value-bar valueType="Absolute Throttle Position" webSocketProperty="AbsolutThrottlePosition" [minRange]="0"
+    [maxRange]="100" [isPositiveOnly]="true"></app-value-bar>
 </app-collapsible-panel>
+<app-collapsible-panel title="Steering Wheel Angle">
+  <app-value-bar valueType="Steering Wheel Angle" webSocketProperty="SteeringWheelAngle" [minRange]="-1000"
+    [maxRange]="1000" [isPositiveOnly]="false"></app-value-bar>
+</app-collapsible-panel>
+<app-collapsible-panel title="Accelerator Pedal PositionD">
+  <app-value-bar valueType="AcceleratorPedalPositionD" webSocketProperty="AcceleratorPedalPositionD" [minRange]="0"
+    [maxRange]="100" [isPositiveOnly]="true"></app-value-bar>
+</app-collapsible-panel>
+<app-collapsible-panel title="Relative Throttle Position">
+  <app-value-bar valueType="Relative Throttle Position" webSocketProperty="RelativeThrottlePosition" [minRange]="0"
+    [maxRange]="100" [isPositiveOnly]="true"></app-value-bar>
+</app-collapsible-panel>
+
+<!-- Add more components for other values as needed -->

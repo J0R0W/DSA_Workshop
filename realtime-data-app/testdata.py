@@ -11,16 +11,27 @@ async def send_test_data(websocket, path):
         humidity = round(random.uniform(40, 60), 2)      # Random humidity between 40 and 60
         steering = round(random.uniform(-200, 200), 2)  
         gas = round(random.uniform(0, 100), 2)  
+        SteeringWheelAngle = round(random.uniform(-200, 200), 2)
+        AbsolutThrottlePosition = round(random.uniform(0, 100), 2)
+        AcceleratorPedalPositionD = round(random.uniform(0, 100), 2)
+        RelativeThrottlePosition = round(random.uniform(0, 100), 2)
         # Prepare the data as a JSON string
         data = json.dumps({
             "temperature": temperature,
             "humidity": humidity,
             "timestamp": datetime.now().isoformat(),
             "gas":gas,
-            "steering":steering
+            "SteeringMoment":steering,
+            "SteeringWheelAngle":SteeringWheelAngle,
+            "AbsolutThrottlePosition":AbsolutThrottlePosition,
+            "AcceleratorPedalPositionD":AcceleratorPedalPositionD,
+            "RelativeThrottlePosition":RelativeThrottlePosition
         })
-
-        # Send the data to the connected client
+        #'SteeringMoment'
+        # 'SteeringWheelAngle',
+        # 'AbsolutThrottlePosition',
+        # 'AcceleratorPedalPositionD',
+        # 'RelativeThrottlePosition'
         await websocket.send(data)
 
         # Wait for 1 second before sending the next set of data
